@@ -23,7 +23,7 @@ with a list of all items in the vending machine with its quantity remaining:
     - Each slot in the vending machine has enough room for 5 of that product.
     - Every product is initially stocked to the maximum amount.
     - A product that has run out must indicate that it is SOLD OUT.
-6... When the customer selects "(2) Purchase", they are guided through the purchasing
+6. When the customer selects "(2) Purchase", they are guided through the purchasing
 process menu:
     >```
     >(1) Feed Money
