@@ -10,7 +10,7 @@ import java.util.Scanner;
 //1 - creating a class to extends to all item types
 public class MachineItems {
     //2- creating the File object
-    private static final File itemList = new File("vendingmachine.csv");
+    private static final File itemList = new File("C:\\Users\\rmall\\OneDrive\\Desktop\\Assignments\\module-1-capstone-pair\\capstone\\vendingmachine.csv");
     //3- these maps will contain the items code, price, name, stock, and type
     public static Map<String, String> itemCode = new HashMap<>();
     public static Map<String, BigDecimal> itemPrice = new HashMap<>();
