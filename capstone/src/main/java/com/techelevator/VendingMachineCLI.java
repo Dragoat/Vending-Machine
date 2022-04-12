@@ -37,6 +37,7 @@ public class VendingMachineCLI {
 				//9- this is an example of how we can update the stock
 				//itemStock.put("D4", itemStock.get("D4") - 1);
 				//System.out.println(itemStock.get("D4"));
+
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				//8 - do the purchase
 			} else if (choice.equals(EXIT_BUTTON)) {
