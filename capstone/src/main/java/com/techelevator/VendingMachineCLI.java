@@ -12,6 +12,7 @@ public class VendingMachineCLI {
 	private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
 	private static final String EXIT_BUTTON = "Exit";
 	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, EXIT_BUTTON};
+	private static final String[] PURCHASE_MENU_OPTIONS = {"Feed Money", "Select Product", "Get Change", "Finish Transaction"};
 
 
 
@@ -20,7 +21,16 @@ public class VendingMachineCLI {
 	public VendingMachineCLI(Menu menu) {
 		this.menu = menu;
 	}
-
+	//7 - display vending machine items from file and with map
+	public void productMenu() {
+		for(String f : itemCode.keySet()) {
+			if (itemStock.get(f) == 0) {
+				System.out.println(f + "| " + itemName.get(f) + "| $" + itemPrice.get(f) + "| SOLD OUT");
+			} else {
+				System.out.println(f + "| " + itemName.get(f) + "| $" + itemPrice.get(f) + "| " + itemStock.get(f) + " in stock");
+			}
+		}
+	}
 
 
 	public void run() throws FileNotFoundException {
@@ -30,20 +40,27 @@ public class VendingMachineCLI {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
-				//7 - display vending machine items from file and with map
-				for(String f : itemCode.keySet()) {
-					System.out.println(f + "| " + itemName.get(f) + "| $" + itemPrice.get(f) + "| " + itemStock.get(f) + " in stock");
-				}
+				itemStock.put("D4", itemStock.get("D4") - 5);
+				productMenu();
 				//9- this is an example of how we can update the stock
 				//itemStock.put("D4", itemStock.get("D4") - 1);
 				//System.out.println(itemStock.get("D4"));
 
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				//8 - do the purchase
+				choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
 			} else if (choice.equals(EXIT_BUTTON)) {
 				//6 - added exit code
 				System.exit(3);
 			}
+		}
+	}
+
+	//10- Method to run the purchase menu
+	private void purchaseMenuOption() {
+		String purchaseOption = "";
+		while(!purchaseOption.contentEquals("Finish Transaction")) {
+
 		}
 	}
 
