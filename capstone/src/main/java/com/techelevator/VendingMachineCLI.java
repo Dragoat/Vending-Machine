@@ -30,6 +30,7 @@ public class VendingMachineCLI {
 				System.out.println(f + "| " + itemName.get(f) + "| $" + itemPrice.get(f) + "| " + itemStock.get(f) + " in stock");
 			}
 		}
+		//only show the back button and not the whole main menu
 		String choice = (String) menu.getChoiceFromOptions(BACK_BUTTON);
 	}
 
@@ -58,10 +59,17 @@ public class VendingMachineCLI {
 	}
 
 	//10- Method to run the purchase menu
-	private void purchaseMenuOption() {
+	private void processPurchase() throws FileNotFoundException {
 		String purchaseOption = "";
 		while(!purchaseOption.contentEquals("Finish Transaction")) {
+			purchaseOption = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
+			if(purchaseOption.contentEquals("Feed Money")) {
 
+			} else if(purchaseOption.contentEquals("Select Product")) {
+
+			} else if(purchaseOption.contentEquals("Get Change")) {
+				Transaction.makeChange(Transaction.getBalance());
+			}
 		}
 	}
 
