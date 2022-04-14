@@ -49,7 +49,7 @@ public class Transaction {
                 MachineItems.itemStock.put(snackCode, MachineItems.itemStock.get(snackCode)-1);
                 System.out.println("Enjoy! \n" + "Your balance is now: $" + balance);
                 //printing out the messages based on codes
-                if(snackCode.contentEquals("A")) {
+                if(snackCode) {
                     Chips.getMessage();
                 } else if (snackCode.contains("B")) {
                     Candy.getMessage();

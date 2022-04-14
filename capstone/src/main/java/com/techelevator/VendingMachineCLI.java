@@ -53,6 +53,7 @@ public class VendingMachineCLI {
 				choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
 			} else if (choice.equals("Exit")) {
 				//6 - added exit code
+				//spot for receipt
 				System.exit(3);
 			}
 		}
