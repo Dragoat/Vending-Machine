@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 
 public class Transaction {
-
+    public static String balancemessage = "Current Money Provided: $";
     public static BigDecimal balance = new BigDecimal(0.00).setScale(2);
     private static BigDecimal pastBalance = balance;
     private static int quarters;
@@ -30,7 +30,7 @@ public class Transaction {
         } else if(feed.equals("$10")) {
             balance = balance.add(new BigDecimal(10.00));
         }
-        System.out.println("Current Money Provided: $" + balance);
+        System.out.println(balancemessage + balance);
     }
 
     //method to make change when asked

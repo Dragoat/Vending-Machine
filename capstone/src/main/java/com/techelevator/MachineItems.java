@@ -4,15 +4,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 //1 - creating a class to extends to all item types
 public class MachineItems {
     //2- creating the File object
-    private static final File itemList = new File("C:\\Users\\rmall\\OneDrive\\Desktop\\Assignments\\module-1-capstone-pair\\capstone\\vendingmachine.csv");
+    private static final File itemList = new File("C:\\Users\\charles\\OneDrive\\Desktop\\MA_CODE_FOLDER\\02 capstone project\\module-1-capstone-pair\\capstone\\vendingmachine.csv");
     //3- these maps will contain the items code, price, name, stock, and type
-    public static Map<String, String> itemCode = new HashMap<>();
+    public static Map<String, String> itemCode = new LinkedHashMap<>();
     public static Map<String, BigDecimal> itemPrice = new HashMap<>();
     public static Map<String, String> itemName = new HashMap<>();
     public static Map<String, Integer> itemStock = new HashMap<>();

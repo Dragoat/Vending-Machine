@@ -5,6 +5,9 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+import static com.techelevator.Transaction.balance;
+import static com.techelevator.Transaction.balancemessage;
+
 public class Menu {
 
 	private PrintWriter out;
@@ -45,8 +48,11 @@ public class Menu {
 		out.println();
 		for (int i = 0; i < options.length; i++) {
 			int optionNum = i + 1;
-			out.println("(" + optionNum + ") " + options[i]);
+			out.println(optionNum + ") " + options[i]);
 		}
+		//if statment to display money currently heald
+		//out.print(System.lineSeparator() +balancemessage + balance);
+
 		out.print(System.lineSeparator() + "Please choose an option >>> ");
 		out.flush();
 	}
