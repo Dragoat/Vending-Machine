@@ -47,12 +47,8 @@ public class VendingMachineCLI {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
-				itemStock.put("D4", itemStock.get("D4") - 5);
+				//displaying the product menu
 				productMenu();
-				//9- this is an example of how we can update the stock
-				//itemStock.put("D4", itemStock.get("D4") - 1);
-				//System.out.println(itemStock.get("D4"));
-
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				//8 - do the purchase
 				purchaseMenu();
@@ -77,6 +73,9 @@ public class VendingMachineCLI {
 				Transaction.makeChange(Transaction.getBalance());
 			}
 		}
+		if(purchaseOption.contentEquals("Finish Transaction")) {
+			Transaction.makeChange(Transaction.getBalance());
+		}
 	}
 
 	//giving the customer their money options
@@ -93,17 +92,23 @@ public class VendingMachineCLI {
 	private void productSelection() throws FileNotFoundException {
 		Set<String> itemCodeKeys = itemCode.keySet();
 		for (String key : itemCodeKeys) {
-			System.out.println(key + "| " + itemName.get(key) + "| $" + itemPrice.get(key) + "| " + itemStock.get(key) + " in stock");
-		}
-			System.out.println("\n(1) Back" + "\nCurrent Money Provided: $" + Transaction.getBalance() + "\n" + "Please Make a Selection >>> ");
-			Scanner userInput = new Scanner(System.in);
-			String itemCode = userInput.nextLine();
-			if (itemCode.equals("1")) {
-				purchaseMenu();
+			if (itemStock.get(key) == 0) {
+				System.out.println(key + "| " + itemName.get(key) + "| $" + itemPrice.get(key) + "| OUT OF STOCK");
 			} else {
-				Transaction.buySnacks(itemCode);
+				System.out.println(key + "| " + itemName.get(key) + "| $" + itemPrice.get(key) + "| " + itemStock.get(key) + " in stock");
 			}
 		}
+		System.out.println("\n1) Back" + "\nCurrent Money Provided: $" + Transaction.getBalance() + "\n" + "\nPlease Make a Selection >>> ");
+		Scanner userInput = new Scanner(System.in);
+		String itemCode = userInput.nextLine();
+		//back button for the user
+		if (itemCode.equals("1")) {
+				purchaseMenu();
+			} else {
+				//transaction
+				Transaction.buySnacks(itemCode);
+			}
+	}
 
 	public static void main(String[] args) throws FileNotFoundException{
 		Menu menu = new Menu(System.in, System.out);

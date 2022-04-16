@@ -3,7 +3,11 @@ package com.techelevator;
 import javax.crypto.Mac;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Transaction {
 
@@ -31,6 +35,8 @@ public class Transaction {
             balance = balance.add(new BigDecimal(10.00));
         }
         System.out.println("Current Money Provided: $" + balance);
+        //updates audit log with money feed
+        writeAuditLog("FEED MONEY", pastBalance, balance);
     }
 
     //method to make change when asked
@@ -45,6 +51,8 @@ public class Transaction {
         Transaction.balance = balance.multiply(new BigDecimal(0.00));
         oldBalance = oldBalance.multiply(new BigDecimal(0.00));
         System.out.println("Your Change: " + quarters + " quarters " + dimes + " dimes " + nickels + " nickels.");
+        //updates audit log with change
+        writeAuditLog("GIVE CHANGE", oldBalance, balance);
     }
 
     //the method below will allow customer to buy item
@@ -66,6 +74,7 @@ public class Transaction {
                 balance = balance.subtract(MachineItems.itemPrice.get(snackCode));
                 //taking from the stock
                 MachineItems.itemStock.put(snackCode, MachineItems.itemStock.get(snackCode)-1);
+                writeAuditLog(MachineItems.itemName.get(snackCode), oldBalance, balance);
                 System.out.println("Enjoy! \n" + "Your balance is now: $" + balance);
                 //printing out the messages based on codes
                 if(snackCode.contains("A")) {
@@ -79,6 +88,16 @@ public class Transaction {
                 }
             }
 
+        }
+    }
+
+    //log to audit all the transactions that are being done
+    public static void writeAuditLog(String transaction, BigDecimal oldBalance, BigDecimal currentBalance) throws FileNotFoundException {
+        LocalDateTime dateTime = LocalDateTime.now();
+        DateTimeFormatter specificFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
+        String dateFormatted = dateTime.format(specificFormat);
+        try(PrintWriter auditLog = new PrintWriter(new FileOutputStream("AuditLog.txt", true))) {
+            auditLog.println(">" + dateFormatted + " " + transaction + " $" + oldBalance + " $" + currentBalance);
         }
     }
 }
