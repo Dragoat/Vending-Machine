@@ -34,13 +34,9 @@ public class Transaction {
         } else if(feed.equals("$10")) {
             balance = balance.add(new BigDecimal(10.00));
         }
-<<<<<<< HEAD
         System.out.println("Current Money Provided: $" + balance);
         //updates audit log with money feed
         writeAuditLog("FEED MONEY", pastBalance, balance);
-=======
-        System.out.println(balancemessage + balance);
->>>>>>> c6cd18f5b501c1c86fbed6a719eeaaef51f3d951
     }
 
     //method to make change when asked
