@@ -9,6 +9,10 @@ public class Transaction {
 
     public static BigDecimal balance = new BigDecimal(0.00).setScale(2);
     private static BigDecimal pastBalance = balance;
+    private static int quarters;
+    private static int dimes;
+    private static int nickels;
+    private static double balanceD;
 
     //returns the balance
     public static BigDecimal getBalance() {
@@ -16,16 +20,31 @@ public class Transaction {
     }
 
     //method to feed money into the vending machine
-    public static void feedMoney(String feed) throws FileNotFoundException {
-        int moneyFeed = Integer.parseInt(feed);
-        balance = balance.add(new BigDecimal(moneyFeed));
-        System.out.println("Current Money Provided: " + balance);
+    public static void feedCash(String feed) throws FileNotFoundException {
+        if(feed.equals("$1")) {
+            balance = balance.add(new BigDecimal(1.00));
+        } else if(feed.equals("$2")) {
+            balance = balance.add(new BigDecimal(2.00));
+        } else if(feed.equals("$5")) {
+            balance = balance.add(new BigDecimal(5.00));
+        } else if(feed.equals("$10")) {
+            balance = balance.add(new BigDecimal(10.00));
+        }
+        System.out.println("Current Money Provided: $" + balance);
     }
 
     //method to make change when asked
     public static void makeChange(BigDecimal balance) throws FileNotFoundException {
-        System.out.println("Your change is $" + balance);
-        Transaction.balance = BigDecimal.valueOf(0.00);
+        BigDecimal oldBalance = balance;
+        balanceD = (balance.doubleValue()*100);
+        quarters = (int) (balanceD/25);
+        balanceD -= (quarters*25);
+        dimes = (int) (balanceD/10);
+        balanceD -= (dimes*10);
+        nickels = (int) balanceD/5;
+        Transaction.balance = balance.multiply(new BigDecimal(0.00));
+        oldBalance = oldBalance.multiply(new BigDecimal(0.00));
+        System.out.println("Your Change: " + quarters + " quarters " + dimes + " dimes " + nickels + " nickels.");
     }
 
     //the method below will allow customer to buy item
@@ -49,7 +68,7 @@ public class Transaction {
                 MachineItems.itemStock.put(snackCode, MachineItems.itemStock.get(snackCode)-1);
                 System.out.println("Enjoy! \n" + "Your balance is now: $" + balance);
                 //printing out the messages based on codes
-                if(snackCode) {
+                if(snackCode.contains("A")) {
                     Chips.getMessage();
                 } else if (snackCode.contains("B")) {
                     Candy.getMessage();
