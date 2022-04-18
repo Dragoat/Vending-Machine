@@ -8,6 +8,8 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Transaction {
     public static String balancemessage = "Current Money Provided: $";
@@ -17,6 +19,7 @@ public class Transaction {
     private static int dimes;
     private static int nickels;
     private static double balanceD;
+    private static final Queue receipt = new LinkedList<String>();
 
     //returns the balance
     public static BigDecimal getBalance() {
@@ -71,6 +74,8 @@ public class Transaction {
             } else if(balance.compareTo(MachineItems.itemPrice.get(snackCode)) == 1 || balance.compareTo(MachineItems.itemPrice.get(snackCode)) == 0) {
                 //the balance will update
                 BigDecimal oldBalance = balance;
+                //receipt
+                receipt.add(MachineItems.itemName.get(snackCode) +" - $"+ MachineItems.itemPrice.get(snackCode));
                 balance = balance.subtract(MachineItems.itemPrice.get(snackCode));
                 //taking from the stock
                 MachineItems.itemStock.put(snackCode, MachineItems.itemStock.get(snackCode)-1);
@@ -87,6 +92,23 @@ public class Transaction {
                     Gum.getMessage();
                 }
             }
+
+        }
+    }
+
+    public static void getReceipt() throws FileNotFoundException{
+        if (receipt.size() != 0) {
+            Double total = 0.0; //@change to big decimal
+            System.out.println(System.lineSeparator() + "***Receipt Print***"); //@line separate needed
+            //System.out.println(System.lineSeparator());
+            for (Object f : receipt) {
+                total += Double.parseDouble(f.toString().substring(f.toString().length() - 4));
+
+                System.out.println(f);
+
+            }
+            System.out.println(System.lineSeparator() + "Items bought - " + receipt.size() + "\nTotal Spent - $" + String.format("%.2f", total));
+            System.out.println("Thank you! Come again!!!");
 
         }
     }

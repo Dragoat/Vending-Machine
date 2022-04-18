@@ -20,8 +20,6 @@ public class VendingMachineCLI {
 	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, "Exit"};
 	private static final String[] PURCHASE_MENU_OPTIONS = {"Feed Money", "Select Product", "Get Change", "Finish Transaction"};
 	private static  final String[] CASH_INPUT_OPTIONS = {"$1", "$2", "$5", "$10", "Back"};
-	private static final Queue receipt = new LinkedList<String>();
-
 
 
 
@@ -79,22 +77,8 @@ public class VendingMachineCLI {
 			}
 		}
 		if (purchaseOption.contentEquals("Finish Transaction")) {
+			Transaction.getReceipt();
 			Transaction.makeChange(Transaction.getBalance());
-			//@recite will print outside after the while loop ends
-			if (receipt.size() != 0) {
-				Double total = 0.0; //@change to big decimal
-				System.out.println(System.lineSeparator() + "***Receipt Print***"); //@line separate needed
-				//System.out.println(System.lineSeparator());
-				for (Object f : receipt) {
-					total += Double.parseDouble(f.toString().substring(f.toString().length() - 4, f.toString().length() - 1));
-
-					System.out.println(f);
-
-				}
-				System.out.println(System.lineSeparator() + "Items bought - " + receipt.size() + "\nTotal Spent - $" + String.format("%.2f", total));
-				System.out.println("Thank you! Come again!!!");
-
-			}
 		}
 	}
 
@@ -120,16 +104,14 @@ public class VendingMachineCLI {
 		}
 		System.out.println("\n1) Back" + "\nCurrent Money Provided: $" + Transaction.getBalance() + "\n" + "\nPlease Make a Selection >>> ");
 		Scanner userInput = new Scanner(System.in);
-		String itemCode = userInput.nextLine();
-		//add item to new list here
-		receipt.add(itemName.get(itemCode) +" - $"+itemPrice.get(itemCode));
+		String itemCode = userInput.nextLine().toUpperCase();
 		//back button for the user
 		if (itemCode.equals("1")) {
-				purchaseMenu();
-			} else {
-				//transaction
-				Transaction.buySnacks(itemCode);
-			}
+			purchaseMenu();
+		} else {
+			//transaction
+			Transaction.buySnacks(itemCode);
+		}
 	}
 
 	public static void main(String[] args) throws FileNotFoundException{
