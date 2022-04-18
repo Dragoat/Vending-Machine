@@ -74,7 +74,7 @@ public class Transaction {
             } else if(balance.compareTo(MachineItems.itemPrice.get(snackCode)) == 1 || balance.compareTo(MachineItems.itemPrice.get(snackCode)) == 0) {
                 //the balance will update
                 BigDecimal oldBalance = balance;
-                //receipt
+                //adds customers bought items to a receipt
                 receipt.add(MachineItems.itemName.get(snackCode) +" - $"+ MachineItems.itemPrice.get(snackCode));
                 balance = balance.subtract(MachineItems.itemPrice.get(snackCode));
                 //taking from the stock
@@ -96,11 +96,11 @@ public class Transaction {
         }
     }
 
+    //method to call the receipt list and print it out to the customer
     public static void getReceipt() throws FileNotFoundException{
         if (receipt.size() != 0) {
-            Double total = 0.0; //@change to big decimal
-            System.out.println(System.lineSeparator() + "***Receipt Print***"); //@line separate needed
-            //System.out.println(System.lineSeparator());
+            Double total = 0.0;
+            System.out.println(System.lineSeparator() + "***Receipt Print***");
             for (Object f : receipt) {
                 total += Double.parseDouble(f.toString().substring(f.toString().length() - 4));
 
